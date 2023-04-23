@@ -5,6 +5,20 @@ import { setupPageGuard } from './permission'
 import { ChatLayout } from '@/views/chat/layout'
 
 const routes: RouteRecordRaw[] = [
+
+  {
+    path: '/login',
+    name: 'Login',
+    redirect: '/login',
+    children: [
+      {
+        path: '/login',
+        name: 'Login',
+        component: () => import('@/components/common/Login/index.vue'),
+      },
+    ],
+  },
+
   {
     path: '/',
     name: 'Root',

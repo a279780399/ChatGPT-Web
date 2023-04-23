@@ -1,6 +1,7 @@
 import type { AxiosProgressEvent, GenericAbortSignal } from 'axios'
 import { post } from '@/utils/request'
 import { useAuthStore, useSettingStore } from '@/store'
+import { getToken } from '@/store/modules/user/token'
 
 export function fetchChatAPI<T = any>(
   prompt: string,
@@ -43,12 +44,15 @@ export function fetchChatAPIProcess<T = any>(
       top_p: settingStore.top_p,
     }
   }
-
+	const token = getToken()
   return post<T>({
     url: '/chat-process',
     data,
     signal: params.signal,
     onDownloadProgress: params.onDownloadProgress,
+		headers: Object.assign({
+			Authorization: `Bearer ${token}`
+		})
   })
 }
 
